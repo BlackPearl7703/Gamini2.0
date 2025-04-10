@@ -1,7 +1,8 @@
 import React from "react";
 
 export default function LiveStatus({ trainData }) {
-  const data = trainData
+  const data = trainData.data
+  console.log(trainData)
   const previousStations = data?.previous_stations || [];
   const upcomingStations = data?.upcoming_stations || [];
   const currentStationCode = data?.current_station_code;

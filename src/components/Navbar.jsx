@@ -48,7 +48,7 @@ export default function Navbar() {
           to="/station-trains"
           className="block text-white bg-green-600 hover:bg-green-700 font-semibold py-3 px-4 rounded-xl shadow-md text-center transition"
         >
-          Get Trains BY Stations
+          Get Trains By Stations
         </Link>
 
         <Link
