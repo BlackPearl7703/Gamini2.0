@@ -1239,14 +1239,14 @@ export default function TrainLiveStatus() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-setLoading(true)
+// setLoading(true)
     // 🔧 Replace this with your actual fetch logic
     console.log("Fetching live status for train:", trainNumber);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-transparent px-4">
-      { !loading &&  <form
+      { !tdata &&  <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6"
       >
@@ -1281,7 +1281,7 @@ setLoading(true)
       {
         console.log(tdata)
       }
-     {loading && <LiveStatus trainData={tdata}/>}
+     {tdata && <LiveStatus trainData={tdata}/>}
     </div>
   );
 }
