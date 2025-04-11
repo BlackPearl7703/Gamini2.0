@@ -1,19 +1,47 @@
 import { useState } from "react";
-
+import axios from "axios";
+import PNRStatus from "../ResultsComponents/PNRStatus";
+import Loading from "./Loading";
 export default function PnrStatus() {
   const [PnrNumber, SetPnrNumber] = useState("");
+  const [pdata,setPdata]=useState(null)
+  const [loading, setLoading] = useState(false);
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-
+    setLoading(true);
     // 🔧 Replace this with your actual fetch logic
-    console.log("Fetching live status for train:", trainNumber);
-  };
+    console.log("Fetching pnr status for train:", PnrNumber);
+    const options = {
+      method: "GET",
+      url: "https://irctc1.p.rapidapi.com/api/v3/getPNRStatus",
+      params: {
+        pnrNumber: PnrNumber,
+      },
+      headers: {
+        "X-RapidAPI-Key": "e1aa14092bmsh46a7b7297d0ff9fp1a1491jsn9956860de603",
+        "X-RapidAPI-Host": "irctc1.p.rapidapi.com",
+      },
+    };
+  
+    try {
+      const response = await axios.request(options);
+      setPdata(response.data.data)
+      return response;
+    } catch (error) {
+      console.error(error);
+      alert("Error fetching PNR data. Please try again.");
+      return null; // Return null on error
+    }
+    finally {
+      setLoading(false);
+    }
+  }
+  
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-transparent px-4">
-      <form
+    <div className="min-h-screen flex flex-col items-center justify-center bg-transparent px-4">
+      {!pdata && <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6"
       >
@@ -44,6 +72,11 @@ export default function PnrStatus() {
           Get PNR Status
         </button>
       </form>
+
+}
+
+      {loading && <Loading/>}
+      {pdata && <PNRStatus data={pdata}/>}
     </div>
   );
 }

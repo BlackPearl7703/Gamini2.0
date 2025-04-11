@@ -3,6 +3,7 @@ import StationInput from "./StationInput";
 import { data } from "../Data/StationName&Code";
 import TrainSearchResults from "../ResultsComponents/TrainSearch";
 import axios from "axios";
+import Loading from "./Loading";
 export default function SearchTrains() {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
@@ -10,7 +11,8 @@ export default function SearchTrains() {
   const [sourceSuggestions, setSourceSuggestions] = useState([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
   const [loading,setLoading] = useState(false);
-  const [sdata,setSdata]=useState([]);
+  const [sdata,setSdata]=useState(null);
+ 
     const handleSourceSuggestionClick = (station) => {
       setSource(station);
       setSourceSuggestions([]);
@@ -1137,11 +1139,14 @@ export default function SearchTrains() {
     } catch (error) {
       console.error(error);
     }
+    finally{
+      setLoading(false);
+    } 
   };
 
   return (
     <div className="min-h-screen min-w-10/12 flex flex-col items-center justify-center bg-transparent px-4">
-    { !loading && <form
+    { !sdata && <form 
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md space-y-6"
       >
@@ -1210,7 +1215,7 @@ export default function SearchTrains() {
       </form>
 
         }
-
+{loading && <Loading/>}
        {sdata &&   <TrainSearchResults trains={sdata}/>}
     </div>
   );

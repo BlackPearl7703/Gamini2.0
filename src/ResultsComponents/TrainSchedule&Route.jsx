@@ -1,8 +1,8 @@
 import React from "react";
 
 const TrainScheduleRoute = ({ trainData }) => {
-  const { trainName, trainNumber, trainType, runDays, class: classes, quota, route } = trainData.data;
-  console.log(trainData.data);
+  console.log(trainData);
+  const { trainName, trainNumber, trainType, runDays, class: classes, quota, route } = trainData;
   const dayLabels = {
     sun: "Sun", mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat"
   };

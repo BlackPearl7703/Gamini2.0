@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { data } from "../Data/StationName&Code";
 import StationInput from "./StationInput";
+import axios from "axios";
+import FareComponent from "../ResultsComponents/TrainFare";
+import Loading from "./Loading";
 export default function CheckFare() {
   const [trainNumber, setTrainNumber] = useState("");
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [sourceSuggestions, setSourceSuggestions] = useState([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
+  const [tdata, setTdata] = useState(null);
+  const [loading, setLoading] = useState(false);
    
   
     const handleSourceSuggestionClick = (station) => {
@@ -52,15 +57,16 @@ export default function CheckFare() {
     };
    
   const handleDestinationSuggestionClick = (station) => {
-    console.log('hello world');
+    // console.log('hello world');
     setDestination(station);
     setDestinationSuggestions([]);
   };
 
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    setLoading(true);
 
     // 🔧 Replace this with your real API call
     console.log(
@@ -71,11 +77,40 @@ export default function CheckFare() {
       "To:",
       destination
     );
+    const train=trainNumber;
+    const src=source.split("-")[1]
+    const des=destination.split("-")[1]
+
+    const options = {
+      method: 'GET',
+      url: 'https://irctc1.p.rapidapi.com/api/v2/getFare',
+      params: {
+        trainNo: train,
+        fromStationCode: src,
+        toStationCode: des
+      },
+      headers: {
+        'X-RapidAPI-Key': 'e1aa14092bmsh46a7b7297d0ff9fp1a1491jsn9956860de603',
+        'X-RapidAPI-Host': 'irctc1.p.rapidapi.com'
+      }
+    };
+    
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+      setTdata(response.data.data);
+        return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+    finally{
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-transparent px-4">
-      <form
+    <div className="min-h-screen flex flex-col items-center justify-center bg-transparent px-4">
+      { !tdata && <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md space-y-6"
       >
@@ -183,7 +218,11 @@ export default function CheckFare() {
         >
           Check Fare
         </button>
-      </form>
+      </form>}
+
+      {loading && <Loading/>}
+
+      { tdata && <FareComponent data={tdata} />}
     </div>
   );
 }

@@ -1,15 +1,45 @@
 import { useState } from "react";
 import { data } from "../Data/StationName&Code";
 import StationInput from "./StationInput";
-
+import TrainsFromStation from "../ResultsComponents/TrainsFromStation";
+import axios from "axios";
+import Loading from "./Loading";
 export default function TrainFromStations() {
   const [stationCode, setStationCode] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const handleSubmit = (e) => {
+  const [tdata,setTdata]=useState(null)
+  const [loading,setLoading]=useState(false)
+  const handleSubmit = async(e) => {
     e.preventDefault();
-
+    setLoading(true);
     // 🔧 Replace this with your actual fetch logic
     console.log("Fetching live status for station:", stationCode);
+     const stcode=stationCode.split("-")[1]
+   
+    const options = {
+      method: "GET",
+      url: "https://irctc1.p.rapidapi.com/api/v3/getTrainsByStation",
+      params: {
+        stationCode: stcode,
+      },
+      headers: {
+        // "X-RapidAPI-Key": "07cd06475bmshe4b7c90f93c9c80p1cda5fjsna3b003ac7d95",
+        "X-RapidAPI-Key": "f5f35543dfmsh48fcdb9e6b6f345p16e4eejsn82174aa9f4b6",
+        "X-RapidAPI-Host": "irctc1.p.rapidapi.com",
+      },
+    };
+    
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+      setTdata(response.data.data)
+        return response.data;
+    } catch (error) {
+      console.error(error);
+    }  
+    finally{
+      setLoading(false);
+    }
   };
   const handleInputChange = (e) => {
     setStationCode(e.target.value);
@@ -38,8 +68,8 @@ export default function TrainFromStations() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-transparent px-4">
-      <form
+    <div className="min-h-screen flex flex-col items-center justify-center bg-transparent px-4">
+     {!tdata && <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6"
       >
@@ -95,7 +125,9 @@ export default function TrainFromStations() {
         >
           Get Trains
         </button>
-      </form>
+      </form>}
+     {loading && <Loading/>}
+     {tdata &&  <TrainsFromStation data={tdata}/>}
     </div>
   );
 }

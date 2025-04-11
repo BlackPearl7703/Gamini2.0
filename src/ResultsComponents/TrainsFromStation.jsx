@@ -64,6 +64,7 @@ const TrainSection = ({ title, trains }) => (
 );
 
 const TrainsFromStation = ({ data }) => {
+  console.log("Data in TrainsFromStation:", data);
   const { originating, passing, destination } = data || {};
   const [activeTab, setActiveTab] = useState("originating");
 
