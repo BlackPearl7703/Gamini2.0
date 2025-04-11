@@ -6,6 +6,8 @@ export default function TrainScheduleAndRoute() {
   const [trainNumber, setTrainNumber] = useState("");
   const[tdata,setTdata]=useState(null)
   const [loading,setLoading]=useState(false)
+  const apiKey = import.meta.env.VITE_API_KEY;
+
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ const options = {
   url: 'https://irctc1.p.rapidapi.com/api/v1/getTrainSchedule',
   params: {trainNo: trainNumber},
   headers: {
-    'X-RapidAPI-Key': '374fe8bb26msh25dc509fadb6daep16f529jsneff256bc829c',
+    'X-RapidAPI-Key': apiKey,
     'X-RapidAPI-Host': 'irctc1.p.rapidapi.com'
   }
 };

@@ -12,7 +12,7 @@ export default function SearchTrains() {
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
   const [loading,setLoading] = useState(false);
   const [sdata,setSdata]=useState(null);
- 
+  const apiKey = import.meta.env.VITE_API_KEY;
     const handleSourceSuggestionClick = (station) => {
       setSource(station);
       setSourceSuggestions([]);
@@ -1126,7 +1126,7 @@ export default function SearchTrains() {
         dateOfJourney: date
       },
       headers: {
-        'X-RapidAPI-Key': '818231618emshdd755b0078b204ap14794ejsnfd4b490fa409',
+        'X-RapidAPI-Key': apiKey,
         'X-RapidAPI-Host': 'irctc1.p.rapidapi.com'
       }
     };

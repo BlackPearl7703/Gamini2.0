@@ -6,6 +6,7 @@ export default function PnrStatus() {
   const [PnrNumber, SetPnrNumber] = useState("");
   const [pdata,setPdata]=useState(null)
   const [loading, setLoading] = useState(false);
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -19,7 +20,7 @@ export default function PnrStatus() {
         pnrNumber: PnrNumber,
       },
       headers: {
-        "X-RapidAPI-Key": "e1aa14092bmsh46a7b7297d0ff9fp1a1491jsn9956860de603",
+        "X-RapidAPI-Key": apiKey,
         "X-RapidAPI-Host": "irctc1.p.rapidapi.com",
       },
     };

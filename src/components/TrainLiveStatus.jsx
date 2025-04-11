@@ -6,6 +6,7 @@ export default function TrainLiveStatus() {
   const [trainNumber, setTrainNumber] = useState("");
   const [tdata, setTdata] = useState(null);
   const [loading ,setLoading]=useState(false)
+  const apiKey = import.meta.env.VITE_API_KEY;
   
 //   const tdata={
 //     "journey_time": 1015,
@@ -1253,7 +1254,7 @@ setLoading(true)
          
         },
         headers: {
-          'X-RapidAPI-Key': '818231618emshdd755b0078b204ap14794ejsnfd4b490fa409',
+          'X-RapidAPI-Key': apiKey,
           'X-RapidAPI-Host': 'irctc1.p.rapidapi.com'
         }
       };

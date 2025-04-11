@@ -12,7 +12,8 @@ export default function CheckFare() {
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
   const [tdata, setTdata] = useState(null);
   const [loading, setLoading] = useState(false);
-   
+  const apiKey = import.meta.env.VITE_API_KEY;
+
   
     const handleSourceSuggestionClick = (station) => {
       setSource(station);
@@ -90,7 +91,7 @@ export default function CheckFare() {
         toStationCode: des
       },
       headers: {
-        'X-RapidAPI-Key': 'e1aa14092bmsh46a7b7297d0ff9fp1a1491jsn9956860de603',
+        'X-RapidAPI-Key': apiKey,
         'X-RapidAPI-Host': 'irctc1.p.rapidapi.com'
       }
     };
