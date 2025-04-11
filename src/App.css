@@ -12,5 +12,10 @@
   background-size: cover; /* or 'contain' depending on what you want */
   /* min-height: 80vh; */
   height: 100vh;
-  width: 20vw;
+  /* width: 20vw; */
+}
+
+
+.nav-link {
+  @apply block text-white bg-green-600 hover:bg-green-700 font-semibold py-3 px-4 rounded-xl shadow-md text-center transition;
 }
