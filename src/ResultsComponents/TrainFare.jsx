@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const FareBreakup = ({ breakup }) => (
   <div className="text-sm text-gray-600 space-y-1 mt-2">
     {breakup.map((item, idx) => (
@@ -46,10 +46,17 @@ const FareComponent = ({ data }) => {
   const { general, tatkal } = data;
 
   return (
+
     <div className="max-w-5xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold text-indigo-900 mb-6">💰 Fare Details</h1>
       <FareCategory title="General Fare" fares={general} />
       <FareCategory title="Tatkal Fare" fares={tatkal} />
+      <Link
+          to="/"
+          className="block text-white bg-green-600 hover:bg-green-700 font-semibold py-3 px-4 rounded-xl shadow-md text-center transition"
+        >
+          Go Back
+        </Link>
     </div>
   );
 };

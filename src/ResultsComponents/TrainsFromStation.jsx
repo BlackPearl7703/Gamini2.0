@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 // const RunDaysDisplay = ({ runDays }) => (
@@ -104,6 +104,12 @@ const TrainsFromStation = ({ data }) => {
 
       {/* Active Section */}
       {renderActiveSection()}
+      <Link
+          to="/"
+          className="block text-white bg-green-600 hover:bg-green-700 font-semibold py-3 px-4 rounded-xl shadow-md text-center transition"
+        >
+          Go Back
+        </Link>
     </div>
   );
 };

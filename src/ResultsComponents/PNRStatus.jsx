@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const PNRStatus = ({ data }) => {
   const {
     Pnr,
@@ -93,7 +93,12 @@ const PNRStatus = ({ data }) => {
     <p className="text-xs text-gray-500 mt-2 text-center">Train Direction ➡️</p>
   </div>
 )}
-
+ <Link
+          to="/"
+          className="block text-white bg-green-600 hover:bg-green-700 font-semibold py-3 px-4 rounded-xl shadow-md text-center transition"
+        >
+          Go Back
+        </Link>
     </div>
   );
 };

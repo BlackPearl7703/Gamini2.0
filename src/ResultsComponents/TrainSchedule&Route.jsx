@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const TrainScheduleRoute = ({ trainData }) => {
   console.log(trainData);
   const { trainName, trainNumber, trainType, runDays, class: classes, quota, route } = trainData;
@@ -83,6 +83,12 @@ const TrainScheduleRoute = ({ trainData }) => {
           </div>
         </div>
       </div>
+      <Link
+          to="/"
+          className="block text-white bg-green-600 hover:bg-green-700 font-semibold py-3 px-4 rounded-xl shadow-md text-center transition"
+        >
+          Go Back
+        </Link>
     </div>
   );
 };

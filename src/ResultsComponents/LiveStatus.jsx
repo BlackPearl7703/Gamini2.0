@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 export default function LiveStatus({ trainData }) {
   const data = trainData
   const previousStations = data?.previous_stations || [];
@@ -72,6 +72,12 @@ export default function LiveStatus({ trainData }) {
           );
         })}
       </div>
+      <Link
+          to="/"
+          className="block text-white bg-green-600 hover:bg-green-700 font-semibold py-3 px-4 rounded-xl shadow-md text-center transition"
+        >
+          Go Back
+        </Link>
     </div>
   );
 }
