@@ -4,6 +4,7 @@ import StationInput from "./StationInput";
 import axios from "axios";
 import FareComponent from "../ResultsComponents/TrainFare";
 import Loading from "./Loading";
+import ErrorMessage from "./ErrorTemplate";
 export default function CheckFare() {
   const [trainNumber, setTrainNumber] = useState("");
   const [source, setSource] = useState("");
@@ -12,7 +13,9 @@ export default function CheckFare() {
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
   const [tdata, setTdata] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isSubmitted,setIsSubmitted]=useState(false)
   const apiKey = import.meta.env.VITE_API_KEY;
+  const [invalidIp,setInvalidIp]=useState(false)
 
   
     const handleSourceSuggestionClick = (station) => {
@@ -99,6 +102,10 @@ export default function CheckFare() {
     try {
       const response = await axios.request(options);
       console.log(response.data);
+      console.log(response.data.status,response.data.data.general.length,response.data.data.tatkal.length)
+      if(response.data.message==="Success" && response.data.data.general.length===0 && response.data.data.tatkal.length===0){
+         setInvalidIp(true);
+      }
       setTdata(response.data.data);
         return response.data;
     } catch (error) {
@@ -106,12 +113,13 @@ export default function CheckFare() {
     }
     finally{
       setLoading(false);
+      setIsSubmitted(true)
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-transparent px-4">
-      { !tdata && <form
+      { !isSubmitted && !tdata && <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md space-y-6"
       >
@@ -223,7 +231,10 @@ export default function CheckFare() {
 
       {loading && <Loading/>}
 
-      { tdata && <FareComponent data={tdata} />}
+      { invalidIp  && <ErrorMessage type="invalidInput"/>}
+      {console.log(invalidIp)}
+
+      { !invalidIp&& tdata && <FareComponent data={tdata} />}
     </div>
   );
 }
