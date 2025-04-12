@@ -6,7 +6,7 @@ export default function Footer() {
           {/* Logo + Name */}
           <div>
             <div className="flex items-center space-x-2">
-              <img src="./src/assets/logo.png" alt="Train Logo" className="h-10 " />
+              <img src="./assets/logo.png" alt="Train Logo" className="h-10 " />
               <span className="text-xl font-bold text-white">Gamini</span>
             </div>
             <p className="mt-4 text-sm ">
