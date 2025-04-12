@@ -9,13 +9,13 @@ export default function Navbar() {
     <>
       {/* Sidebar */}
       <nav
-        className={`sidebar top-0 left-0 h-[calc(100vh)] bg-white shadow-md  flex flex-col justify-between transition-all duration-600 z-50 ${
+        className={`sidebar top-0 left-0 h-[calc(100vh)] overflow-hidden bg-white shadow-md  flex flex-col justify-between transition-all duration-600 z-50 ${
           isOpen ? "w-[calc(20vw)] h-full px-4 py-3 " : "w-0  overflow-hidden "
         }`}
       >
         {/* Top: Logo + Close Button */}
         <div className="flex items-center justify-between mb-6">
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 flex-wrap">
             <img
               src="./assets/logo.png"
               alt="Logo"
@@ -41,11 +41,12 @@ export default function Navbar() {
           <Link to="/fare-check" className="nav-link">Check Fare</Link>
         </div>
 
-        <Link to="/developer">
-          <button className="bg-green-500 text-white px-4 py-2 rounded-xl shadow hover:bg-green-600 transition w-full">
-            Developer
-          </button>
-        </Link>
+        <Link
+        to="/developer"
+        className="text-center text-sm text-green-600 underline hover:text-green-800 transition"
+      >
+        Meet the Developer
+      </Link>
       </nav>
 
       {/* Toggle Button */}
