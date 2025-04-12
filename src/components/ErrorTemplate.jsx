@@ -8,7 +8,7 @@ const errorIcons = {
 };
 
 const errorMessages = {
-  rateLimit: "You've hit the rate limit. Please wait and try again later.",
+  rateLimit: "You've hit the rate limit. Please wait or contact administrator",
   invalidInput: "The data you entered seems invalid. Please check and try again.",
   default: "Something went wrong. Please try again.",
 };

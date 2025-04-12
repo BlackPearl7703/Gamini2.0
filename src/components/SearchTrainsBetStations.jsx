@@ -4,6 +4,7 @@ import { data } from "../Data/StationName&Code";
 import TrainSearchResults from "../ResultsComponents/TrainSearch";
 import axios from "axios";
 import Loading from "./Loading";
+import ErrorMessage from "./ErrorTemplate";
 export default function SearchTrains() {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
@@ -13,6 +14,11 @@ export default function SearchTrains() {
   const [loading,setLoading] = useState(false);
   const [sdata,setSdata]=useState(null);
   const apiKey = import.meta.env.VITE_API_KEY;
+
+  const [invalidIp,setInvalidIp]=useState(false)
+  const [isSubmitted,setIsSubmitted]=useState(false)
+  const [error,setError]=useState(false)
+
     const handleSourceSuggestionClick = (station) => {
       setSource(station);
       setSourceSuggestions([]);
@@ -1134,13 +1140,20 @@ export default function SearchTrains() {
     try {
       const response = await axios.request(options);
       console.log(response.data);
+      if(response.data.message==="Success" &&response.data.data.length===0)
+      {
+        setInvalidIp(true);
+       
+      }
         // return response.data;
         setSdata(response.data.data);
     } catch (error) {
+      setError(true)
       console.error(error);
     }
     finally{
       setLoading(false);
+      setIsSubmitted(true)
     } 
   };
 
@@ -1216,7 +1229,16 @@ export default function SearchTrains() {
 
         }
 {loading && <Loading/>}
-       {sdata &&   <TrainSearchResults trains={sdata}/>}
+
+{/* invalid input */}
+{invalidIp ? <ErrorMessage type="invalidInput"/>:
+      // rate limit error
+      error ? <ErrorMessage type="rateLimit"/> : 
+      // some other error
+      !error  && !sdata && isSubmitted   ? <ErrorMessage type="default"/> : 
+      // successful response
+      sdata &&   <TrainSearchResults trains={sdata}/>}
+       
     </div>
   );
 }

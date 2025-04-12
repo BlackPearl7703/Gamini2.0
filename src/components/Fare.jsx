@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { data } from "../Data/StationName&Code";
 import StationInput from "./StationInput";
 import axios from "axios";
@@ -13,9 +13,10 @@ export default function CheckFare() {
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
   const [tdata, setTdata] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [isSubmitted,setIsSubmitted]=useState(false)
   const apiKey = import.meta.env.VITE_API_KEY;
   const [invalidIp,setInvalidIp]=useState(false)
+  const [isSubmitted,setIsSubmitted]=useState(false)
+  const [error,setError]=useState(false)
 
   
     const handleSourceSuggestionClick = (station) => {
@@ -102,13 +103,14 @@ export default function CheckFare() {
     try {
       const response = await axios.request(options);
       console.log(response.data);
-      console.log(response.data.status,response.data.data.general.length,response.data.data.tatkal.length)
+      // console.log(response.data.status,response.data.data.general.length,response.data.data.tatkal.length)
       if(response.data.message==="Success" && response.data.data.general.length===0 && response.data.data.tatkal.length===0){
          setInvalidIp(true);
       }
-      setTdata(response.data.data);
+       setTdata(response.data.data);
         return response.data;
     } catch (error) {
+      setError(true);
       console.error(error);
     }
     finally{
@@ -231,10 +233,22 @@ export default function CheckFare() {
 
       {loading && <Loading/>}
 
-      { invalidIp  && <ErrorMessage type="invalidInput"/>}
-      {console.log(invalidIp)}
+      {/* { invalidIp  && <ErrorMessage type="invalidInput"/>} */}
+      {/* { error  && <ErrorMessage type="rateLimit"/>} */}
+      {/* {!error  && !tdata && isSubmitted && <ErrorMessage type="default"/>} */}
+      {/* {console.log(invalidIp)} */}
 
-      { !invalidIp&& tdata && <FareComponent data={tdata} />}
+      {/* { !invalidIp&& tdata && <FareComponent data={tdata} />} */}
+
+
+      {/* invalid input */}
+      {invalidIp ? <ErrorMessage type="invalidInput"/>:
+      // rate limit error
+      error ? <ErrorMessage type="rateLimit"/> : 
+      // some other error
+      !error  && !tdata && isSubmitted   ? <ErrorMessage type="default"/> : 
+      // successful response
+      <FareComponent data={tdata} />}
     </div>
   );
 }

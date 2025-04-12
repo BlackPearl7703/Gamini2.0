@@ -2,11 +2,15 @@ import { useState } from "react";
 import axios from "axios";
 import PNRStatus from "../ResultsComponents/PNRStatus";
 import Loading from "./Loading";
+import ErrorMessage from "./ErrorTemplate";
 export default function PnrStatus() {
   const [PnrNumber, SetPnrNumber] = useState("");
   const [pdata,setPdata]=useState(null)
   const [loading, setLoading] = useState(false);
   const apiKey = import.meta.env.VITE_API_KEY;
+  const [invalidIp,setInvalidIp]=useState(false)
+  const [isSubmitted,setIsSubmitted]=useState(false)
+  const [error,setError]=useState(false)
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -27,22 +31,29 @@ export default function PnrStatus() {
   
     try {
       const response = await axios.request(options);
+      if(response.data.status===false)
+      {
+        setInvalidIp(true);
+      }
       setPdata(response.data.data)
+      console.log(response.data)
       return response;
     } catch (error) {
+      setError(true)
       console.error(error);
       alert("Error fetching PNR data. Please try again.");
       return null; // Return null on error
     }
     finally {
       setLoading(false);
+      setIsSubmitted(true)
     }
   }
   
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-transparent px-4">
-      {!pdata && <form
+      {!isSubmitted && <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6"
       >
@@ -77,7 +88,16 @@ export default function PnrStatus() {
 }
 
       {loading && <Loading/>}
-      {pdata && <PNRStatus data={pdata}/>}
+
+
+       {/* invalid input */}
+       {invalidIp ? <ErrorMessage type="invalidInput"/>:
+      // rate limit error
+      error ? <ErrorMessage type="rateLimit"/> : 
+      // some other error
+      !error  && !pdata && isSubmitted   ? <ErrorMessage type="default"/> : 
+      // successful response
+      pdata && <PNRStatus data={pdata}/>}
     </div>
   );
 }

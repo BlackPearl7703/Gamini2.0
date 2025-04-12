@@ -4,12 +4,17 @@ import StationInput from "./StationInput";
 import TrainsFromStation from "../ResultsComponents/TrainsFromStation";
 import axios from "axios";
 import Loading from "./Loading";
+import ErrorMessage from "./ErrorTemplate";
 export default function TrainFromStations() {
   const [stationCode, setStationCode] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [tdata,setTdata]=useState(null)
   const [loading,setLoading]=useState(false)
   const apiKey = import.meta.env.VITE_API_KEY;
+
+  const [invalidIp,setInvalidIp]=useState(false)
+  const [isSubmitted,setIsSubmitted]=useState(false)
+  const [error,setError]=useState(false)
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -37,9 +42,11 @@ export default function TrainFromStations() {
       setTdata(response.data.data)
         return response.data;
     } catch (error) {
+      setError(true)
       console.error(error);
     }  
     finally{
+      setIsSubmitted(true)
       setLoading(false);
     }
   };
@@ -71,7 +78,7 @@ export default function TrainFromStations() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-transparent px-4">
-     {!tdata && <form
+     { !isSubmitted && !tdata && <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-6"
       >
@@ -129,7 +136,16 @@ export default function TrainFromStations() {
         </button>
       </form>}
      {loading && <Loading/>}
-     {tdata &&  <TrainsFromStation data={tdata}/>}
+     {/* {tdata &&  <TrainsFromStation data={tdata}/>} */}
+
+     {/* invalid input */}
+     {invalidIp ? <ErrorMessage type="invalidInput"/>:
+      // rate limit error
+      error ? <ErrorMessage type="rateLimit"/> : 
+      // some other error
+      !error  && !tdata && isSubmitted   ? <ErrorMessage type="default"/> : 
+      // successful response
+      tdata && <TrainsFromStation data={tdata}/>}
     </div>
   );
 }

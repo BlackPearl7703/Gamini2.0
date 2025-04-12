@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 const TrainScheduleRoute = ({ trainData }) => {
-  console.log(trainData);
+  // console.log(trainData);
   const { trainName, trainNumber, trainType, runDays, class: classes, quota, route } = trainData;
   const dayLabels = {
     sun: "Sun", mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat"
