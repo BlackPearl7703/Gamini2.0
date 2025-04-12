@@ -1,12 +1,30 @@
-# React + Vite
+# 🚆 Gamini 2.0
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Gamini 2.0 is a modern and responsive travel web application that helps users explore Indian Railways with ease. Users can search for trains, check live train statuses, verify PNR details, view train schedules, and check fares — all from a single platform.
 
-Currently, two official plugins are available:
+## 🌟 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔍 Search trains between stations
+- 📍 Get live train running status
+- 🛤️ View full train schedule and route
+- 📬 Check PNR status
+- 🏙️ Get trains arriving at a station
+- 💰 Check ticket fares by class (General/Tatkal)
+- 📌 Clean, responsive UI built with React and TailwindCSS
+- 🎛️ Closable Sidebar Navigation
+- ⚙️ Error handling for rate limits and invalid data
+- 🧠 Ready for backend integration and API expansion
 
-## Expanding the ESLint configuration
+## 🚀 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React, React Router, Tailwind CSS, Vite
+- **Deployment**: Vercel
+- **External APIs**: [Railway API](https://railwayapi.site/), [IRCTC unofficial APIs] *(pluggable)*
+
+## 🔧 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/Gamini2.0.git
+cd Gamini2.0
