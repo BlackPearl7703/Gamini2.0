@@ -19,7 +19,7 @@ Gamini 2.0 is a modern and responsive travel web application that helps users ex
 
 - **Frontend**: React, React Router, Tailwind CSS, Vite
 - **Deployment**: Vercel
-- **External APIs**: [Rapid IRCTC API]([(https://rapidapi.com/IRCTCAPI/api/irctc1/playground/apiendpoint_184fa865-f743-4b56-9dbc-49efc3165bd6)]) *(pluggable)*
+- **External APIs**:[Railway API]([https://railwayapi.site/](https://rapidapi.com/IRCTCAPI/api/irctc1/playground/apiendpoint_184fa865-f743-4b56-9dbc-49efc3165bd6))
 
 ## 🔧 Getting Started
 
