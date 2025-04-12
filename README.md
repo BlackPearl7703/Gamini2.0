@@ -23,8 +23,26 @@ Gamini 2.0 is a modern and responsive travel web application that helps users ex
 
 ## 🔧 Getting Started
 
-### 1. Clone the repository
+### 1.  Clone the repository
 
 ```bash
 git clone https://github.com/your-username/Gamini2.0.git
 cd Gamini2.0
+```
+### 2.  Install dependencies
+
+```bash
+npm install
+```
+### 3.  Add environment variables
+
+```bash
+VITE_API_KEY=your_api_key_here
+```
+### 4.  Run locally
+
+```bash
+npm run dev
+```
+
+
